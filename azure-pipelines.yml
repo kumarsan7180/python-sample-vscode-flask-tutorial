@@ -20,6 +20,9 @@ steps:
     containerRegistry: 'DockerServiceConnection'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    repository: 'PythonApp'
+    tags: |
+      $(Build.BuildId)
 
 
 # - task: UsePythonVersion@0
