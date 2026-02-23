@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - name: customtag
+    value: "pythonapp"
 steps:
 - task: Docker@2
   inputs:
@@ -20,9 +23,9 @@ steps:
     containerRegistry: 'DockerServiceConnection'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    repository: 'kumarsanwork/PythonApp'
+    repository: '7180sandeepacr.azurecr.io/PythonApp'
     tags: |
-      $(Build.BuildId)
+      $(customtag)
 
 
 # - task: UsePythonVersion@0
