@@ -6,31 +6,33 @@
 trigger:
 - main
 
-pool:
-  name: agentpool1
-
 variables:
-  - name: customtag
-    value: "pythonapp"
-steps:
+  dockerRegistryServiceConnection: 'ACRServiceConnection'
+  imageRepository: 'pythonapp'
+  tag: '$(Build.BuildId)'
 
-- task: DockerInstaller@0
-  inputs:
-    dockerVersion: '17.09.0-ce'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'DockerServiceConnection'
-    command: 'login'
+stages:
+- stage: Build
+  displayName: Build and publish stage
+  jobs:
+  - job: Build
+    displayName: Build job
+    pool:
+      name: 'agentpool1'
+    steps:
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'ACRServiceConnection'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    repository: '7180sandeepacr.azurecr.io/PythonApp'
-    tags: |
-      $(customtag)
-
+    - task: Docker@2
+      displayName: Build and publish image to Azure Container Registry
+      inputs:
+        command: buildAndPush
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        dockerfile: '**/Dockerfile'
+        tags: |
+          $(tag)
 
 
 
