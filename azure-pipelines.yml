@@ -20,7 +20,7 @@ steps:
     containerRegistry: 'DockerServiceConnection'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    repository: 'PythonApp'
+    repository: 'kumarsanwork/PythonApp'
     tags: |
       $(Build.BuildId)
 
