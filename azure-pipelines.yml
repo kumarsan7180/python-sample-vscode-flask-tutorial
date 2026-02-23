@@ -7,7 +7,7 @@ trigger:
 - main
 
 variables:
-  dockerRegistryServiceConnection: 'ACRServiceConnection'
+  dockerRegistryServiceConnection: 'ACRServiceConnection2'
   imageRepository: 'pythonapp'
   tag: '$(Build.BuildId)'
 
